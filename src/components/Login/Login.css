@@ -1,0 +1,68 @@
+@keyframes slideIn {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    25% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+    75% {
+      transform: translateY(20px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+}
+@keyframes slideAndFloat {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+.ra-login-left-bg {
+    animation: slideAndFloat 3s ease-in-out infinite;
+}
+.icons-bg-shadow {
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    background-color: #fff;
+}
+.icons-bg-shadow:hover {
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+    background-color: #37474f;
+}
+.icons-bg-shadow:hover svg {
+    color: #fff;
+}
+.icons-bg-shadow:hover svg path {
+    fill: #fff;
+}
+.auth-login-icon {
+    cursor: pointer;
+}
+.phone-booking input {
+    background-color: inherit;
+    padding: 4px;
+    outline: none;
+}
+.phone-booking input {
+    background-color: inherit;
+    padding: 4px;
+}
+.btm-btns strong:hover {
+    cursor: pointer;
+}
+.phone-booking {
+  border: 1px solid #a0aec0;
+}
+.phone-booking:focus {
+  border-color: #ff7a1d;
+}
+.phone-booking {
+  transition: border-color 0.3s ease;
+}
