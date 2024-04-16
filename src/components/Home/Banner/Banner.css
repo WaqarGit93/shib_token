@@ -1,0 +1,10 @@
+.hero-banner-main {
+    background-image: url(../../../assets/img/hero-bg-dev.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+}
+.token-wrap {
+    background: rgba(26, 31, 46, 0.9);
+}

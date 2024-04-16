@@ -1,0 +1,53 @@
+.is-sticky {
+    box-shadow: -2px 3px 90px -20px rgba(0,0,0,.25);
+    animation: stickySlideDown .65s cubic-bezier(.23,1,.32,1) both;
+}
+@keyframes stickySlideDown{
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+.bg-overlay-main {
+    /* background-image: url('../../assets/img/bg-overlay.png'); */
+    background-position: top left;
+    background-repeat: repeat;
+    background-size: auto;
+    animation: Enterance 2s ease 0s 1 normal forwards;
+}
+.entrance {
+    animation: Enterance 2s ease 0s 1 normal forwards;
+}
+.exit {
+    animation: Exit 2s ease 0s 1 normal forwards;
+}
+@keyframes Enterance {
+	0% {
+		opacity: 0;
+		transform: translateX(-50px);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+@keyframes Exit {
+	0% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translateX(-50px);
+	}
+}
+/* .bg-overlay {
+    transition: clip-path .8s 0s cubic-bezier(.4,0,.2,1);
+    transition-duration: 2s;
+    transition-delay: .15s;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+} */

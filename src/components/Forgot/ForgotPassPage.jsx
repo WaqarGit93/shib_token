@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
-import ShibaLogo from "../../assets/svg/shib-logo.svg";
+import ShibaLogo from "../../assets/svg/panda-svg.svg";
 import { Link } from "react-router-dom";
 
 const ForgotPassPage = () => {
@@ -8,7 +8,7 @@ const ForgotPassPage = () => {
   const [showConPW, setShowConPW] = useState(false);
 
   const [input, setInput] = useState({
-    email: '',
+    your_email: '',
     password: '',
     confirmPassword: '',
   });
@@ -26,8 +26,9 @@ const ForgotPassPage = () => {
     }  
   }
 
-  const onInputChange = e => {
+  const onInputChange = (e) => {
     const { name, value } = e.target;
+    console.log("value", value)
     setInput(prev => ({
       ...prev,
       [name]: value
@@ -35,13 +36,14 @@ const ForgotPassPage = () => {
     validateInput(e);
   }
 
-  const validateInput = e => {
+
+  const validateInput = (e) => {
     let { name, value } = e.target;
     setError(prev => {
       const stateObj = { ...prev, [name]: "" };
  
       switch (name) {
-        case "email":
+        case "your_email":
           if (!value) {
             stateObj[name] = "Please enter Email.";
           }
@@ -73,6 +75,10 @@ const ForgotPassPage = () => {
     });
   }
 
+  useEffect(()=> {
+    console.log("input.email", input.email)
+  }, [input.email])
+
   return (
     <div className="w-full bg-[#000] py-[60px] sm:py-0 sm:h-[100vh]">
       <div className="main-container flex items-center justify-center h-full gap-4 mx-auto">
@@ -96,22 +102,22 @@ const ForgotPassPage = () => {
             <form className="max-w-[80%] mx-auto">
               <div className="mb-6">
                 <label
-                  htmlFor="email"
+                  htmlFor="your_email"
                   className="block mb-2 text-sm font-medium text-white poppins-family"
                 >
                   Enter Your email
                 </label>
                 <input
-                  type="email"
-                  id="email"
+                  type="your_email"
+                  id="your_email"
                   className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5"
                   placeholder="name@flowbite.com"
-                  value={input.email}
+                  value={input.your_email}
                   onChange={onInputChange}
                   onBlur={validateInput}
                   required=""
                 />
-                <p> {error.email && <span className="err">{error.email}</span>}</p>
+                <p className="text-red"> {error.email && <span className="err">{error.email}</span>}</p>
               </div>
               <div className="mb-6 relative">
                 <label

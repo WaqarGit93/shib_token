@@ -4,7 +4,7 @@ import {
   EyeOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import ShibaLogo from "../../assets/svg/shib-logo.svg";
+import ShibaLogo from "../../assets/svg/panda-svg.svg";
 const SignUpPage = () => {
   const [formRender, setFormRender] = useState(true);
   const [showPW, setShowPW] = useState(false);
@@ -91,7 +91,7 @@ const SignUpPage = () => {
                 className="h-[100px] w-[100px]"
               />
             <h2 className="text-[24px] sm:text-[36px] text-[#fff] font-semibold poppins-family">
-              Sign Up for <span className="uppercase text-primary"> SHIBTOKEN </span>
+              Sign Up for <span className="uppercase text-primary"> SHIB Dev </span>
             </h2>
           </div>
           <div className="ra-login-form mt-[8%] w-full">
@@ -154,7 +154,7 @@ const SignUpPage = () => {
                       required=""
                     />
                     <span
-                      className="absolute right-4 top-[11px] z-[999] cursor-pointer"
+                      className="absolute right-4 top-[38px] z-[999] text-[#000] cursor-pointer"
                       onClick={() => HandlePassword("first")}
                     >
                       {showPW ? <EyeOutlined /> : <EyeInvisibleOutlined />}
@@ -178,7 +178,7 @@ const SignUpPage = () => {
                       // onBlur={validateInput}
                       required=""
                     />
-                    <span className="absolute right-4 top-[11px] z-[999] cursor-pointer" onClick={() => HandlePassword('')}> 
+                    <span className="absolute right-4 top-[38px] z-[999] text-[#000] cursor-pointer" onClick={() => HandlePassword('')}> 
                       {showConPW ? <EyeOutlined /> : <EyeInvisibleOutlined />} 
                     </span>
                     {/* <p> {error.confirmPassword && ( <span className="err">{error.confirmPassword}</span> )} </p> */}

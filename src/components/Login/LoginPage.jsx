@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
-import ShibaLogo from "../../assets/svg/shib-logo.svg";
+import ShibaLogo from "../../assets/svg/panda-svg.svg";
 import { Link, useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
@@ -16,7 +16,7 @@ const LoginPage = () => {
     navigate('/otp')
   }
   return (
-   <div className="w-full bg-[#000] py-[60px] sm:py-0 sm:h-[100vh]">
+   <div className="w-full bg-[#000] py-[60px] sm:py-0 sm:h-full">
      <div className="main-container flex items-center justify-center h-full gap-4">
       {/* <div className="w-1/2 hidden md:block ra-login-left-bg">
         <div className="w-full h-full">
@@ -31,7 +31,7 @@ const LoginPage = () => {
               className="h-[100px] w-[100px]"
             />
           <h2 className="text-[24px] sm:text-[36px] text-[#fff] font-semibold poppins-family">
-            Login <span className="uppercase text-primary"> SHIBTOKEN </span>
+            Login <span className="uppercase text-primary"> SHIB Dev </span>
           </h2>
         </div>
         <div className="ra-login-form w-full">

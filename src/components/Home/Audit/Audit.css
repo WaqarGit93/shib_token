@@ -1,0 +1,8 @@
+.swap-wrap {
+    background: rgba(26, 31, 46, 0.9);
+    border: 1px solid rgba(26, 31, 46, 0.9);
+}
+.swap-wrap:hover {
+    border-color: #ffffff74;
+    transition: all 0.7s;
+}

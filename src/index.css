@@ -2,8 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+}
 
 .main-container {
     width: 100%;
@@ -25,4 +27,16 @@
 }
 .bg-sec {
     background-color: #ff7a1d;
+}
+.btn-primary {
+    background-color: #8bc53f;
+    border-radius: 999px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 12px 18px;
 }
