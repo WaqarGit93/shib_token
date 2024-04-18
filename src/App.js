@@ -30,7 +30,7 @@ function App() {
       <Routes>
         <Route path="/" element={
           <Home 
-            UserOwns={UserOwns} setUserOwns={setUserOwns}
+            UserOwns={UserOwns} setUserOwns={setUserOwns} Session={Session}
             Activities={Activities} setActivities={setActivities} />} 
           />
         <Route path="/login" element={

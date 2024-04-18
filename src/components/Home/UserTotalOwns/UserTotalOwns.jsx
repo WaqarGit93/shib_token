@@ -1,20 +1,23 @@
 
 import axios from "axios";
 import { BASE_URL } from "../../../constents";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import BuySellModal from "../../Modals/BuySellModal";
 
-const UserTotalOwns = ({UserOwns, setUserOwns, Activities, setActivities}) => {
+const UserTotalOwns = ({UserOwns, setUserOwns, Session, Activities, setActivities}) => {
 
     const EffectHasRun = useRef(true);
-    
-    useEffect(()=>{
-        const UserId = localStorage.getItem("sioe_user_id");
-        if(EffectHasRun.current && UserId) {
-          console.log('EffectHasRun')
+    const [UserID, setUserID] = useState();
 
+    useEffect(()=>{
+        setUserID(localStorage.getItem("sioe_user_id"))
+    },[])
+
+    useEffect(()=>{
+        
+        if(EffectHasRun.current && UserID) {
           axios.postForm(`${BASE_URL}/TokenDetail/`, 
-          { user_id: UserId })
+          { user_id: UserID })
           .then((res) => {
             setUserOwns({
               TotalAmount: res?.data?.total_amount,
@@ -25,9 +28,8 @@ const UserTotalOwns = ({UserOwns, setUserOwns, Activities, setActivities}) => {
             console.log("err",err)
           })
     
-          axios.get(`${BASE_URL}/TokenDetail/?user_id=${UserId}`)
+          axios.get(`${BASE_URL}/TokenDetail/?user_id=${UserID}`)
           .then((res) => {
-            
             setActivities(res?.data);
           })
           .catch((err) => {
@@ -42,7 +44,7 @@ const UserTotalOwns = ({UserOwns, setUserOwns, Activities, setActivities}) => {
   return (
     <>
     {
-        UserOwns.TotalAmount ? 
+        Session ? 
         <section>
         <div className='main-container pt-[100px]'>
             <h1 className="mb-2 text-[28px] sm:text-[32px] leading-[36px] sm:leading-[42px] poppins-semibold text-center text-white mb-6 sm:mb-10">

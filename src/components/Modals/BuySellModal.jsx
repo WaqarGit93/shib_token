@@ -82,7 +82,7 @@ const BuySellModal = () => {
       setBuyModalIsOpen(false);
       axios.postForm(`${BASE_URL}/TokenDataSave/`, 
         { 
-            total_amount: BuyTokensInput, 
+            total_token: BuyTokensInput, 
             type: type,
             token_id: localStorage.getItem("sioe_token_id"),
             user_id: localStorage.getItem("sioe_user_id")
@@ -108,12 +108,12 @@ const BuySellModal = () => {
       <button onClick={openBuyModal} 
         className="font-tajawal text-[0.75em] hover:bg-[#465656] border border-gray-600 icon-slide py-2 px-8 hidden lg:block" 
       >
-        Buy
+        Buy Tokens
       </button>
       <button onClick={openSellModal} 
         className="font-tajawal text-[0.75em] hover:bg-[#465656] border border-gray-600 icon-slide py-2 px-8 hidden lg:block" 
       >
-        Sell
+        Sell Tokens
       </button>
 
       <Modal

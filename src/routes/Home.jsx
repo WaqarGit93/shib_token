@@ -6,11 +6,11 @@ import About from "../components/Home/About/About";
 import Faqs from "../components/Home/Faqs/Faqs";
 import UserTotalOwns from "../components/Home/UserTotalOwns/UserTotalOwns";
 
-const Home = ({UserOwns, setUserOwns, Activities, setActivities}) => {
+const Home = ({UserOwns, setUserOwns, Session, Activities, setActivities}) => {
   return (
     <article className="w-full bg-[#1f282f]">
         <UserTotalOwns 
-          UserOwns={UserOwns} setUserOwns={setUserOwns}
+          UserOwns={UserOwns} setUserOwns={setUserOwns} Session={Session}
           Activities={Activities} setActivities={setActivities}
         /> 
       <Features />
