@@ -43,7 +43,7 @@ const Faqs = () => {
     <Collapse
         bordered={false}
         // defaultActiveKey={['1']}
-        expandIconPosition='right'
+        expandIconPosition='end'
         expandIcon={({ isActive }) => <DownOutlined rotate={isActive ? 90 : 0} />}
         items={getItems(panelStyle)}
         />

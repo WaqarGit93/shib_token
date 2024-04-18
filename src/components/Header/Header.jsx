@@ -1,3 +1,4 @@
+
 // import React, { useEffect, useState } from 'react'
 // import { Link, useLocation } from "react-router-dom";
 // import PandaLogo from "../../assets/svg/panda-svg.svg";
@@ -82,7 +83,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from "react-router-dom";
 import { MenuOutlined, CloseOutlined } from '@ant-design/icons';
 
-const Navbar = ({activeSection}) => {
+const Navbar = ({activeSection, Username, setUsername, setUserOwns, setSession}) => {
   const currentRoute = useLocation();
   const activeStyle = "text-[#C61E46] font-montserat text-[14px] font-medium";
   const nonActiveStyle = "font-[500] text-[#fff] font-montserat text-[14px] font-medium";
@@ -116,6 +117,28 @@ const Navbar = ({activeSection}) => {
     };
   }, [prevScrollY]);
 
+  const HandleLogout = () => {
+    // axios.postForm(`${BASE_URL}/Logout/`, 
+    // { user_id: userId })
+    // .then((res) => {
+    //   console.log("res", res.data)
+    // })
+    // .catch((err) => {
+    //   console.log("err",err)
+    // })
+    localStorage.removeItem("sioe_token_id")
+    localStorage.removeItem("sioe_user_id")
+    localStorage.removeItem("sioe_username")
+    localStorage.removeItem("sioe_email")
+    setUsername('')
+    setUserOwns({
+      TotalAmount: '',
+      TotalTokens: ''
+    })
+    setSession(false)
+  } 
+
+
   return (
     <header className='w-full relative'>
       <div className={`bg-[#1f282f] w-full z-[100] ${isSticky ? "fixed top-0": "static"}`}>
@@ -143,37 +166,37 @@ const Navbar = ({activeSection}) => {
             menuOpen ? 'flex flex-col mt-6 md:top-[100px] absolute top-[32px] left-[0px] bg-[#000] w-[100%] py-[10px] px-[20px] gap-[14px] z-[100]' : 'hidden'
           }`}
         >
-            <a href="#home">
+            <a href="#Staking">
               <div className="flex hover:text-[#C61E46] bg-fixed transition duration-300 ease-in-out rounded-lg">
-                <li className={`flex ${activeSection === "home" ? activeStyle : nonActiveStyle}`} onClick={closeMenu}>
+                <li className={`flex ${activeSection, Username === "Staking" ? activeStyle : nonActiveStyle}`} onClick={closeMenu}>
                   Staking 
                 </li>
               </div>
             </a>
-            <a href="#WhatWeDo">
+            <a href="#Investment">
               <div className="flex hover:text-[#C61E46] bg-fixed  transition duration-300 ease-in-out rounded-lg">
-                <li className={`flex ${activeSection === "WhatWeDo" ? activeStyle : nonActiveStyle}`}>
+                <li className={`flex ${activeSection === "Investment" ? activeStyle : nonActiveStyle}`}>
                     Investment Opportunity
                 </li>
               </div>
             </a>
-            <a href="#WhatWeDo">
+            <a href="#Plans">
               <div className="flex  hover:text-[#C61E46] bg-fixed  transition duration-300 ease-in-out rounded-lg">
-                <li className={`flex ${activeSection === "WhatWeDo" ? activeStyle : nonActiveStyle}`}>
+                <li className={`flex ${activeSection === "Plans" ? activeStyle : nonActiveStyle}`}>
                   Plans
                 </li>
               </div>
             </a>
-            <a href="#Portfolio">
+            <a href="#Learn">
               <div className="flex  hover:text-[#C61E46] bg-fixed  transition duration-300 ease-in-out rounded-lg">
-                <li className={`flex ${activeSection === "Portfolio" ? activeStyle : nonActiveStyle}`}>
+                <li className={`flex ${activeSection === "Learn" ? activeStyle : nonActiveStyle}`}>
                   Learn
                 </li>
               </div>
             </a>
-            <a href="#OurClients">
+            <a href="#About">
               <div className="flex  hover:text-[#C61E46] bg-fixed  transition duration-300 ease-in-out rounded-lg">
-                <li className={`flex ${activeSection === "OurClients" ? activeStyle : nonActiveStyle}`}>
+                <li className={`flex ${activeSection === "About" ? activeStyle : nonActiveStyle}`}>
                   About us
                 </li>
               </div>
@@ -181,9 +204,16 @@ const Navbar = ({activeSection}) => {
           </div>
           <div className="flex gap-6">
             {/* <button className="font-montserat font-[700] text-[#E3204B] text-[0.75em] captilize px-3 hidden lg:block">Speak to an Expert</button> */}
-            <Link to='/login' className="font-tajawal text-[0.75em] hover:bg-[#465656] border border-gray-600 icon-slide py-2 px-8 hidden lg:block" >
-              Sign Up/Sign In
-            </Link>
+            {
+              Username ? 
+              <button onClick={HandleLogout} className="font-tajawal text-[0.75em] hover:bg-[#465656] border border-gray-600 icon-slide py-2 px-8 hidden lg:block" >
+               Hi! {Username}/ Logout
+              </button> :
+              <Link to='/login' className="font-tajawal text-[0.75em] hover:bg-[#465656] border border-gray-600 icon-slide py-2 px-8 hidden lg:block" >
+                Sign Up/Sign In
+              </Link>
+            }
+            
             <button className="font-tajawal text-[0.75em] hover:bg-[#465656] border border-gray-600 icon-slide py-2 px-8 hidden lg:block" >
               Connect Wallet
             </button>
