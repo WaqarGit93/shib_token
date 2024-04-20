@@ -3,10 +3,11 @@ import axios from "axios";
 import { BASE_URL } from "../../../constents";
 import { useEffect, useRef, useState } from "react";
 import BuySellModal from "../../Modals/BuySellModal";
+import MoneyTraModal from "../../Modals/MoneyTraModal";
 
-const UserTotalOwns = ({UserOwns, setUserOwns, Session, Activities, setActivities}) => {
+const UserTotalOwns = ({UserOwns, setUserOwns, Session, Activities, setActivities, Reload, setReload}) => {
 
-    const EffectHasRun = useRef(true);
+    // const EffectHasRun = useRef(true);
     const [UserID, setUserID] = useState();
 
     useEffect(()=>{
@@ -14,9 +15,9 @@ const UserTotalOwns = ({UserOwns, setUserOwns, Session, Activities, setActivitie
     },[])
 
     useEffect(()=>{
-        
-        if(EffectHasRun.current && UserID) {
-          axios.postForm(`${BASE_URL}/TokenDetail/`, 
+
+      if(UserID) {
+        axios.postForm(`${BASE_URL}/TokenDetail/`, 
           { user_id: UserID })
           .then((res) => {
             setUserOwns({
@@ -37,9 +38,8 @@ const UserTotalOwns = ({UserOwns, setUserOwns, Session, Activities, setActivitie
           })
         }
     
-    
-        EffectHasRun.current = false;
-      },[])
+        // EffectHasRun.current = false;
+    },[UserID, Reload])
 
   return (
     <>
@@ -50,6 +50,9 @@ const UserTotalOwns = ({UserOwns, setUserOwns, Session, Activities, setActivitie
             <h1 className="mb-2 text-[28px] sm:text-[32px] leading-[36px] sm:leading-[42px] poppins-semibold text-center text-white mb-6 sm:mb-10">
                 Your Account Details
             </h1>
+            <div className="flex justify-end gap-5 py-4">
+                <MoneyTraModal Reload={Reload} setReload={setReload} />
+            </div>
             <table className="min-w-full rounded-xl">
                 <thead>
                     <tr>
@@ -66,7 +69,7 @@ const UserTotalOwns = ({UserOwns, setUserOwns, Session, Activities, setActivitie
                     <tr>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-left text-sm">
                         <p className="text-gray-900 whitespace-no-wrap">
-                        {UserOwns?.TotalTokens}
+                            {UserOwns?.TotalTokens}
                         </p>
                     </td>
                     <td className="px-5 py-5 border-b border-gray-200 bg-white text-left text-sm">
@@ -81,7 +84,7 @@ const UserTotalOwns = ({UserOwns, setUserOwns, Session, Activities, setActivitie
 
         <div className='main-container pt-[100px]'>
             <div className="flex justify-end gap-5 py-4">
-                <BuySellModal />
+                <BuySellModal Reload={Reload} setReload={setReload} />
             </div>
             <table className="min-w-full rounded-xl">
                 <thead>
@@ -99,22 +102,22 @@ const UserTotalOwns = ({UserOwns, setUserOwns, Session, Activities, setActivitie
                 </thead>   
                 <tbody>
                     {Activities?.map((item, index) => {
-                        console.log("item", item)
+                        // console.log("item", item)
                     return (
                         <tr key={index}>
                             <td className="px-5 py-5 border-b border-gray-200 bg-white text-left text-sm">
                                 <p className="text-gray-900 whitespace-no-wrap">
-                                    {item.timestamp}
+                                    {item?.timestamp}
                                 </p>
                             </td>
                             <td className="px-5 py-5 border-b border-gray-200 bg-white text-left text-sm">
                                 <p className="text-gray-900 whitespace-no-wrap">
-                                    {item.transaction_type}
+                                    {item?.transaction_type}
                                 </p>
                             </td>
                             <td className="px-5 py-5 border-b border-gray-200 bg-white text-left text-sm">
                                 <p className="text-gray-900 whitespace-no-wrap">
-                                    {item.total_token}
+                                    {item?.total_token}
                                 </p>
                             </td>
                         </tr>
@@ -123,9 +126,10 @@ const UserTotalOwns = ({UserOwns, setUserOwns, Session, Activities, setActivitie
                 </tbody>     
             </table>
         </div>
-    </section> :
+    </section> 
+    :
     <></>
-    }
+    } 
     </>
    
   )
