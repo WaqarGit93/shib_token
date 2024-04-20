@@ -15,8 +15,14 @@ function App() {
   const [Username, setUsername] = useState(localStorage.getItem("sioe_username") || "");
   const [UserOwns, setUserOwns] = useState({ TotalAmount: '', TotalTokens: '' });
   const [Activities, setActivities] = useState([]);
+  const [Reload, setReload] = useState(true);
 
   const [Session, setSession] = useState(false);
+
+  useEffect(()=>{
+    const user = localStorage.getItem("sioe_username")
+    if(user) { setSession(true) }
+  },[])
 
   useEffect(()=>{
     if(Session) { setUsername(localStorage.getItem("sioe_username")) }
@@ -31,7 +37,9 @@ function App() {
         <Route path="/" element={
           <Home 
             UserOwns={UserOwns} setUserOwns={setUserOwns} Session={Session}
-            Activities={Activities} setActivities={setActivities} />} 
+            Activities={Activities} setActivities={setActivities} 
+            Reload={Reload} setReload={setReload}
+            />} 
           />
         <Route path="/login" element={
           <Login setTokenId={setTokenId} setUserId={setUserId} 

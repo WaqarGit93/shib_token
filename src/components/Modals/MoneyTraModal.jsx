@@ -7,11 +7,11 @@ import Swal from 'sweetalert2';
 
 Modal.setAppElement('#root');
 
-const BuySellModal = ({Reload, setReload}) => {
-  const [SellModalIsOpen, setSellModalIsOpen] = useState(false);
-  const [BuymodalIsOpen, setBuyModalIsOpen] = useState(false);
-  const [SellTokensInput, setSellTokensInput] = useState();
-  const [BuyTokensInput, setBuyTokensInput] = useState();
+const MoneyTraModal = ({Reload, setReload}) => {
+  const [WithDrawModalIsOpen, setWithDrawModalIsOpen] = useState(false);
+  const [AddmodalIsOpen, setAddModalIsOpen] = useState(false);
+  const [wDrawAmountInput, setwDrawAmountInput] = useState();
+  const [AddAmountInput, setAddAmountInput] = useState();
 
   const customStyles = {
     content: {
@@ -26,84 +26,102 @@ const BuySellModal = ({Reload, setReload}) => {
     },
   };
 
-  const openSellModal = () => {
-    setSellModalIsOpen(true);
+  const openWithdrawModal = () => {
+    setWithDrawModalIsOpen(true);
   };
 
   const closeSellModal = () => {
-    setSellModalIsOpen(false);
+    setWithDrawModalIsOpen(false);
   };
 
-  const openBuyModal = () => {
-    setBuyModalIsOpen(true);
+  const openAddModal = () => {
+    setAddModalIsOpen(true);
   };
 
   const closeBuyModal = () => {
-    setBuyModalIsOpen(false);
+    setAddModalIsOpen(false);
   };
 
-  const HandleSellInput = (e) => {
+  const HandleWithDrawInput = (e) => {
     const value = e.target.value;
-    setSellTokensInput(value);
+    setwDrawAmountInput(value);
   }
 
-  const HandleBuyInput = (e) => {
+  const HandleAddAmountInput = (e) => {
     const value = e.target.value;
-    setBuyTokensInput(value);
+    setAddAmountInput(value);
   }
-
+ 
 
 
   const handleSubmit = (type) => {
-    if(type === 'selling') {
-      setSellModalIsOpen(false);
-      axios.putForm(`${BASE_URL}/TokenDataSave/`, 
+    if(type === 'send') {
+      setWithDrawModalIsOpen(false);
+      axios.postForm(`${BASE_URL}/PaymentRecord/`, 
         { 
-            total_token: SellTokensInput,
+            total_price: wDrawAmountInput,
             type: type,
-            token_id: localStorage.getItem("sioe_token_id"),
             user_id: localStorage.getItem("sioe_user_id")
         }
       )
       .then((res) => {
-        Swal.fire({
-          title: res.data.message,
-          icon: 'success',
-          timer: 3000,
-          showConfirmButton: true,
-          confirmButtonText: 'Ok'
-        })
-        window.scrollTo({ behavior: 'smooth', top: 700 });
-        setSellTokensInput('')
-        setReload(!Reload)
-        window.location.reload();
+        if(res?.data?.status === true) {
+            Swal.fire({
+                title: res.data.message,
+                icon: 'success',
+                timer: 3000,
+                showConfirmButton: true,
+                confirmButtonText: 'Ok'
+            })
+            setwDrawAmountInput('')
+            setReload(!Reload)
+            window.scrollTo({ behavior: 'smooth', top: 100 });
+        } else {
+            Swal.fire({
+                title: res.data.message,
+                icon: 'error',
+                timer: 3000,
+                showConfirmButton: true,
+                confirmButtonText: 'Ok'
+            })
+        }
+       
+        // window.location.reload();
       })
       .catch((err) => {
       console.log("err",err)
       })
     }
 
-    if(type === 'buying') {
-      setBuyModalIsOpen(false);
-      axios.postForm(`${BASE_URL}/TokenDataSave/`, 
+    if(type === 'receive') {
+      setAddModalIsOpen(false);
+      axios.postForm(`${BASE_URL}/PaymentRecord/`, 
         { 
-            total_token: BuyTokensInput, 
+            total_price: AddAmountInput, 
             type: type,
-            token_id: localStorage.getItem("sioe_token_id"),
             user_id: localStorage.getItem("sioe_user_id")
         })
       .then((res) => {
-          Swal.fire({
-            title: res.data.message,
-            icon: 'success',
-            timer: 3000,
-            showConfirmButton: true,
-            confirmButtonText: 'Ok'
-          })
-          setReload(!Reload)
-          window.scrollTo({ behavior: 'smooth', top: 700 });
-          setBuyTokensInput('')
-          window.location.reload();
+        if(res?.data?.status === true) {
+            Swal.fire({
+                title: res.data.message,
+                icon: 'success',
+                timer: 3000,
+                showConfirmButton: true,
+                confirmButtonText: 'Ok'
+            })
+            setAddAmountInput('')
+            setReload(!Reload)
+            window.scrollTo({ behavior: 'smooth', top: 100 });
+        } else {
+            Swal.fire({
+                title: res.data.message,
+                icon: 'error',
+                timer: 3000,
+                showConfirmButton: true,
+                confirmButtonText: 'Ok'
+            })
+        }
       })
       .catch((err) => {
           console.log("err",err)
@@ -113,19 +131,19 @@ const BuySellModal = ({Reload, setReload}) => {
 
   return (
     <>
-      <button onClick={openBuyModal} 
+      <button onClick={openAddModal} 
         className="font-tajawal text-[0.75em] hover:bg-[#465656] border border-gray-600 icon-slide py-2 px-8 hidden lg:block" 
       >
-        Buy Tokens
+       $ Add
       </button>
-      <button onClick={openSellModal} 
+      <button onClick={openWithdrawModal} 
         className="font-tajawal text-[0.75em] hover:bg-[#465656] border border-gray-600 icon-slide py-2 px-8 hidden lg:block" 
       >
-        Sell Tokens
+       $ Withdraw
       </button>
 
       <Modal
-        isOpen={SellModalIsOpen}
+        isOpen={WithDrawModalIsOpen}
         onRequestClose={closeSellModal}
         style={customStyles}
         contentLabel="Example Modal"
@@ -136,22 +154,22 @@ const BuySellModal = ({Reload, setReload}) => {
 
 
         <div className="ra-login-form w-full w-[95%] sm:w-[300px] pt-4">
-          <form className="max-w-[90%] mx-auto">
+          <form className="max-w-[90%] mx-auto" onSubmit={()=> handleSubmit('send')}>
             <div className="mb-6">
               <label
-                htmlFor="SellTokens"
+                htmlFor="WithDrawAmount"
                 className="block mb-2 text-sm font-medium text-white poppins-family text-[#fff]"
               >
-                How many tokens want to sell?
+                Enter Amount for WithDraw from Wallet
               </label>
               <input
                 type="text"
-                id="SellTokens"
+                id="WithDrawAmount"
                 className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5"
-                placeholder="Enter Tokens"
-                value={SellTokensInput}
-                name="SellTokens"
-                onChange={HandleSellInput}
+                placeholder="Enter $ Amount"
+                value={wDrawAmountInput}
+                name="WithDrawAmount"
+                onChange={HandleWithDrawInput}
                 required=""
               />
             </div>
@@ -159,11 +177,11 @@ const BuySellModal = ({Reload, setReload}) => {
               <button
                 type="submit"
                 className="w-[150px] text-white bg-sec hover:bg-[#8bc53f] focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center poppins-family transition-all duration-500"
-                onClick={()=> handleSubmit('selling')}
               >
-                Sell Now
+                WithDraw Now
               </button>
             </div>
+
           </form>
         </div>
 
@@ -171,7 +189,7 @@ const BuySellModal = ({Reload, setReload}) => {
 
 
       <Modal
-        isOpen={BuymodalIsOpen}
+        isOpen={AddmodalIsOpen}
         onRequestClose={closeBuyModal}
         style={customStyles}
         contentLabel="Example Modal"
@@ -182,23 +200,22 @@ const BuySellModal = ({Reload, setReload}) => {
 
 
         <div className="ra-login-form w-full w-[95%] sm:w-[300px] pt-4">
-          <form className="max-w-[90%] mx-auto">
+          <form className="max-w-[90%] mx-auto" onSubmit={()=> handleSubmit('receive')}>
             <div className="mb-6">
-              <h5 className='mb-3'> $1 = 20 tokens </h5>
               <label
-                htmlFor="BuyTokens"
+                htmlFor="AddAmount"
                 className="block mb-2 text-sm font-medium text-white poppins-family text-[#fff]"
               >
-                How many tokens want to Buy?
+                Enter Amount for Add to Wallet
               </label>
               <input
                 type="text"
-                id="BuyTokens"
+                id="AddAmount"
                 className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5"
-                placeholder="Enter Tokens"
-                value={BuyTokensInput}
-                name="BuyTokens"
-                onChange={HandleBuyInput}
+                placeholder="Enter $ Amount"
+                value={AddAmountInput}
+                name="AddAmount"
+                onChange={HandleAddAmountInput}
                 required=""
               />
             </div>
@@ -206,11 +223,11 @@ const BuySellModal = ({Reload, setReload}) => {
               <button
                 type="submit"
                 className="w-[150px] text-white bg-sec hover:bg-[#8bc53f] focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center poppins-family transition-all duration-500"
-                onClick={()=> handleSubmit('buying')}
               >
-                Buy Now
+                Add Now
               </button>
             </div>
+
           </form>
         </div>
 
@@ -220,4 +237,4 @@ const BuySellModal = ({Reload, setReload}) => {
   );
 };
 
-export default BuySellModal;
+export default MoneyTraModal;
